@@ -4,9 +4,9 @@ import torch
 
 import trimesh
 
-f = load_obj("/home/chw/Documents/sdf/out.obj")
+# f = load_obj("/home/chw/Documents/sdf/out.obj")
 
-verts, faces_all, file_property = load_obj("/home/chw/Documents/sdf/out.obj")
+verts, faces_all, file_property = load_obj("/home/chw/Documents/sdf/suitcase.obj")
 
 faces = faces_all[0]
 

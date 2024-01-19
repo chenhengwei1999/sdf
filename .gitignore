@@ -1,4 +1,5 @@
 /sdf.egg-info
 *.stl
+*.obj
 
 sdf/__pycache__/
