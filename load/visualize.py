@@ -1,14 +1,19 @@
 from pytorch3d.io import load_obj
 
 import torch
-
 import trimesh
+import meshio
 
 # f = load_obj("/home/chw/Documents/sdf/out.obj")
 
-verts, faces_all, file_property = load_obj("/home/chw/Documents/sdf/suitcase.obj")
+verts, faces_all, file_property = load_obj("image.obj")
+verts, faces = verts, faces_all[0]
 
-faces = faces_all[0]
+# stl_mesh = meshio.read('out.stl')
+mesh_obj = meshio.read('image.obj')
+
+print(mesh_obj.points, type(mesh_obj.points), max(mesh_obj.points[:, 0]), min(mesh_obj.points[:, 0]))
+print(mesh_obj.points.shape)
 
 # visualize the mesh
 plotly_mesh = trimesh.Trimesh(
@@ -32,5 +37,20 @@ def rotate_points(points, angle):
 
     rotated_points = torch.matmul(points, rotation_matrix)
     return rotated_points
+
+rotate_verts = rotate_points(verts, torch.Tensor([0.5]))
+
+print(rotate_verts)
+
+
+plotly_mesh = trimesh.Trimesh(
+    rotate_verts.detach().cpu().numpy(),
+    faces.detach().cpu().numpy(),
+    vertex_colors=[100, 100, 255],
+)
+
+# TODO: What coordinate system is this? Z-axis is forward out the screen?
+
+plotly_mesh.show()
 
 
